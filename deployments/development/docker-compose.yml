@@ -1,0 +1,13 @@
+services:
+  development-api:
+    image: api:development
+    container_name: development-api
+    hostname: development-api'
+    ports:
+      - "8080:8080"
+    networks:
+      - development
+
+networks:
+  development:
+    driver: bridge
