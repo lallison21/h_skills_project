@@ -2,8 +2,7 @@ include scripts/*.mk
 
 .PHONY: dev-up dev-down
 
-dev-up:
-	docker-compose -f deployments/development/docker-compose.yml up -d
+dev-up: docker-build-api run-api
 
 dev-down:
 	docker-compose -f deployments/development/docker-compose.yml down -v

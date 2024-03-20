@@ -24,7 +24,7 @@ func New() Server {
 
 	addr := os.Getenv("APPLICATION_PORT")
 	if addr == "" {
-		log.Fatalf("%s: enviroment variable APPLICATION_PORT is not set")
+		log.Fatalf("%s: enviroment variable APPLICATION_PORT is not set", fn)
 	}
 
 	mux := http.NewServeMux()
@@ -38,7 +38,7 @@ func New() Server {
 
 	return &application{
 		srv: &http.Server{
-			Addr:    fmt.Sprintf(":%s", addr),
+			Addr:    fmt.Sprintf("0.0.0.0:%s", addr),
 			Handler: mux,
 		},
 	}
