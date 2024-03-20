@@ -3,6 +3,9 @@ package application
 import (
 	"context"
 	"fmt"
+	gateway_status "github.com/lallison/h_skills_project/internal/service/gateways/status"
+	repository_status "github.com/lallison/h_skills_project/internal/service/repository/status"
+	usecase_status "github.com/lallison/h_skills_project/internal/service/usecase/status"
 	"log"
 	"net/http"
 	"os"
@@ -29,12 +32,11 @@ func New() Server {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
-		_, err := w.Write([]byte("/status"))
-		if err != nil {
-			fmt.Println("error to write")
-		}
-	})
+	repository := repository_status.New()
+	useCase := usecase_status.New(repository)
+	gateways := gateway_status.New(useCase)
+
+	mux.HandleFunc("/status", gateways.HandleGetStatus)
 
 	return &application{
 		srv: &http.Server{

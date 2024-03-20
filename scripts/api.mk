@@ -4,7 +4,7 @@ docker-build-api:
 	docker build -t api:development -f deployments/development/Dockerfile.api .
 
 check-api:
-	curl localhost:8080/status
+	curl localhost:8080/status | jq
 
 run-api:
 	docker-compose -f deployments/development/docker-compose.yml up -d
