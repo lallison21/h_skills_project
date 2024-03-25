@@ -1,0 +1,25 @@
+К следующему занятию:
+- добавить json логгер "log/slog"
+
+- скачать mockgen для моковых тестов
+  go install go.uber.org/mock/mockgen@v0.2.0
+  генерить моки через go generate
+
+- подключить базу данных (postgres)
+  добавить в docker compose
+  создаем репозиторий с правильной чистой архитектурой зависимостей
+  добавляем методы сохранения инфы о компьютере и получении инфы по ID
+  ComputerInfo
+  SaveComputer
+  Эти методы будут реализованы на уровне repository и usecase
+  db -> repo(db) -> usecase(repo) -> handler(usecase)
+
+- подключить s3 (minio s3)
+  добавить в docker compose
+  json -> byte[] и кладешь на s3
+  <computer_id>/<computer_id>-<timestamp>.json
+
+request
+handler (gateway)
+usecase (business logic)
+repository (data storage: kafka, DB, cache, embedded)

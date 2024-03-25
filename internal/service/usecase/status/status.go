@@ -2,7 +2,7 @@ package usecase_status
 
 import (
 	"github.com/lallison/h_skills_project/internal/entities"
-	"github.com/lallison/h_skills_project/internal/service/repository/status"
+	repository_status "github.com/lallison/h_skills_project/internal/service/repository/status"
 )
 
 type UseCaseStatus struct {

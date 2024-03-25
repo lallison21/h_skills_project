@@ -1,9 +1,10 @@
 package repository_status
 
 import (
+	"time"
+
 	"github.com/lallison/h_skills_project/internal/entities"
 	"github.com/lallison/h_skills_project/version"
-	"time"
 )
 
 type RepositoryStatus struct {
@@ -14,7 +15,7 @@ func New() *RepositoryStatus {
 	return &RepositoryStatus{
 		response: &entities.Response{
 			ServiceName:    "h_skills_project",
-			ServiceVersion: version.SERVICE_VERSION,
+			ServiceVersion: version.Version,
 			Timestamp:      time.Now(),
 			Status:         "OK",
 		},
