@@ -16,8 +16,8 @@ import (
 )
 
 type Application struct {
-	Host, Port string
-	srv        *http.Server
+	Addr string
+	srv  *http.Server
 
 	ctx       context.Context
 	ctxCancel context.CancelFunc
@@ -46,7 +46,7 @@ func New() *Application {
 		srv:       srv,
 		ctx:       ctx,
 		ctxCancel: ctxCancel,
-		log:       slog.New(slog.NewJSONHandler(os.Stdout, nil)),
+		log:       slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug})),
 	}
 
 	return app
@@ -55,11 +55,11 @@ func New() *Application {
 func (a *Application) Run() {
 	go a.gracefulShutdown()
 
-	a.srv.Addr = ":" + a.Port
+	a.srv.Addr = a.Addr
 
 	a.log.Info(
 		"application started",
-		"port", a.Port,
+		"address", a.Addr,
 		"name", version.Name,
 		"version", version.Version,
 		"commit", version.Commit,

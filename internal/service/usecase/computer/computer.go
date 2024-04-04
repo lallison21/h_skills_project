@@ -1,4 +1,4 @@
-package computer
+package computer_usecase
 
 import "github.com/lallison/h_skills_project/internal/entities"
 
@@ -14,6 +14,10 @@ func New(
 	}
 
 	return uc
+}
+
+func (u *ComputerUseCase) Computer() (*entities.Computer, error) {
+	return nil, nil
 }
 
 func (u *ComputerUseCase) GetStatus() (*entities.Computer, error) {

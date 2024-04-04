@@ -1,5 +1,5 @@
 К следующему занятию:
-- добавить json логгер "log/slog"
+- добавить json логгер "log/slog" (Done)
 
 - скачать mockgen для моковых тестов
   go install go.uber.org/mock/mockgen@v0.2.0

@@ -13,7 +13,7 @@ build-api:
 	-X ${PROJECT}/version.Name=${NAME} \
 	-X ${PROJECT}/version.Commit=${COMMIT} \
 	-X ${PROJECT}/version.BuildTime=${BUILD_TIME}" \
-	-o bin/api cmd/api/main.go 
+	-o bin/api cmd/api/main.go
 
 docker-build-api:
 	docker build -t api:development -f deployments/development/Dockerfile.api .

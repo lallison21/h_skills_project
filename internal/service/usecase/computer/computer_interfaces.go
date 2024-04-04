@@ -1,4 +1,4 @@
-package computer
+package computer_usecase
 
 import "github.com/lallison/h_skills_project/internal/entities"
 
