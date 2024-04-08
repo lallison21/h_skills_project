@@ -79,11 +79,15 @@ func (a *Application) gracefulShutdown() {
 }
 
 type ComputerGateways interface {
+	CreateComputer() http.HandlerFunc
 	Computers() http.HandlerFunc
+	ComputerByID() http.HandlerFunc
 }
 
 func (a *Application) RegisterComputerGateways(gateway ComputerGateways) {
+	a.mux.HandleFunc("/create_computer", gateway.CreateComputer())
 	a.mux.HandleFunc("/computers", gateway.Computers())
+	a.mux.HandleFunc("/computers/{id}", gateway.ComputerByID())
 }
 
 type StatusGateways interface {

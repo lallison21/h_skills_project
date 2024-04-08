@@ -14,6 +14,10 @@ func New(computerUseCase ComputerUseCase) *ComputerGateway {
 	return u
 }
 
+func (g *ComputerGateway) CreateComputer() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {}
+}
+
 func (g *ComputerGateway) Computers() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		computer, err := g.computerUseCase.Computers()
@@ -34,5 +38,11 @@ func (g *ComputerGateway) Computers() http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+	}
+}
+
+func (g *ComputerGateway) ComputerByID() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		r.FormValue("id")
 	}
 }
