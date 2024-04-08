@@ -2,9 +2,12 @@ package main
 
 import (
 	"database/sql"
-	computer_gateways "github.com/lallison/h_skills_project/internal/service/gateways/computer"
-	computer_repository "github.com/lallison/h_skills_project/internal/service/repository/computer"
-	computer_usecase "github.com/lallison/h_skills_project/internal/service/usecase/computer"
+	"github.com/lallison/h_skills_project/internal/service/gateways/computer"
+	gateway_status "github.com/lallison/h_skills_project/internal/service/gateways/status"
+	"github.com/lallison/h_skills_project/internal/service/repository/computer"
+	repository_status "github.com/lallison/h_skills_project/internal/service/repository/status"
+	"github.com/lallison/h_skills_project/internal/service/usecase/computer"
+	usecase_status "github.com/lallison/h_skills_project/internal/service/usecase/status"
 	"log"
 	"os"
 
@@ -35,8 +38,12 @@ func main() {
 	computerRepo := computer_repository.New(db)
 	computerUseCase := computer_usecase.New(computerRepo)
 	computerGateways := computer_gateways.New(computerUseCase)
+	app.RegisterComputerGateways(computerGateways)
 
-	_ = computerGateways
+	statusRepository := repository_status.New()
+	statusUseCase := usecase_status.New(statusRepository)
+	statusGateways := gateway_status.New(statusUseCase)
+	app.RegisterStatusGateways(statusGateways)
 
 	app.Run()
 }

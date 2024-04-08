@@ -16,10 +16,6 @@ func New(
 	return uc
 }
 
-func (u *ComputerUseCase) Computer() (*entities.Computer, error) {
-	return nil, nil
-}
-
-func (u *ComputerUseCase) GetStatus() (*entities.Computer, error) {
-	return u.computerRepository.Computer()
+func (u *ComputerUseCase) Computers() ([]*entities.Computer, error) {
+	return u.computerRepository.Computers()
 }

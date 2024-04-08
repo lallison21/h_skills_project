@@ -9,14 +9,12 @@ import (
 	"syscall"
 	"time"
 
-	gateway_status "github.com/lallison/h_skills_project/internal/service/gateways/status"
-	repository_status "github.com/lallison/h_skills_project/internal/service/repository/status"
-	usecase_status "github.com/lallison/h_skills_project/internal/service/usecase/status"
 	"github.com/lallison/h_skills_project/version"
 )
 
 type Application struct {
 	Addr string
+	mux  *http.ServeMux
 	srv  *http.Server
 
 	ctx       context.Context
@@ -28,21 +26,12 @@ type Application struct {
 func New() *Application {
 	mux := http.NewServeMux()
 
-	// вынести в cmd
-	// сделать метод RegisterHandlers(), которые принимает gateways
-	repository := repository_status.New()
-	useCase := usecase_status.New(repository)
-	gateways := gateway_status.New(useCase)
-
-	mux.HandleFunc("/status", gateways.HandleGetStatus)
-
-	srv := &http.Server{
-		Handler: mux,
-	}
+	srv := &http.Server{}
 
 	ctx, ctxCancel := context.WithCancel(context.Background())
 
 	app := &Application{
+		mux:       mux,
 		srv:       srv,
 		ctx:       ctx,
 		ctxCancel: ctxCancel,
@@ -56,6 +45,7 @@ func (a *Application) Run() {
 	go a.gracefulShutdown()
 
 	a.srv.Addr = a.Addr
+	a.srv.Handler = a.mux
 
 	a.log.Info(
 		"application started",
@@ -86,4 +76,20 @@ func (a *Application) gracefulShutdown() {
 	if err := a.srv.Shutdown(shutdownCtx); err != nil {
 		a.log.Error(err.Error())
 	}
+}
+
+type ComputerGateways interface {
+	Computers() http.HandlerFunc
+}
+
+func (a *Application) RegisterComputerGateways(gateway ComputerGateways) {
+	a.mux.HandleFunc("/computers", gateway.Computers())
+}
+
+type StatusGateways interface {
+	StatusHandle(w http.ResponseWriter, r *http.Request)
+}
+
+func (a *Application) RegisterStatusGateways(gateway StatusGateways) {
+	a.mux.HandleFunc("/status", gateway.StatusHandle)
 }

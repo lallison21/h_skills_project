@@ -7,7 +7,7 @@ import "github.com/lallison/h_skills_project/internal/entities"
 //go:generate mockgen -destination=mocks/cache.go -package=mocks . Cache
 
 type ComputerRepository interface {
-	Computer() (*entities.Computer, error)
+	Computers() ([]*entities.Computer, error)
 }
 
 type ComputerQueueProducer interface {
@@ -16,5 +16,5 @@ type ComputerQueueProducer interface {
 }
 
 type Cache interface {
-	Computer() (*entities.Computer, error)
+	Computers() ([]*entities.Computer, error)
 }

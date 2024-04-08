@@ -15,7 +15,7 @@ func New(useCase *usecase_status.UseCaseStatus) *GatewayStatus {
 	return &GatewayStatus{UseCase: useCase}
 }
 
-func (g *GatewayStatus) HandleGetStatus(w http.ResponseWriter, r *http.Request) {
+func (g *GatewayStatus) StatusHandle(w http.ResponseWriter, r *http.Request) {
 	status, err := g.GetStatus()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
