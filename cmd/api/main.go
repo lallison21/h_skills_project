@@ -3,11 +3,12 @@ package main
 import (
 	"database/sql"
 	"github.com/lallison/h_skills_project/internal/service/gateways/computer"
-	gateway_status "github.com/lallison/h_skills_project/internal/service/gateways/status"
+	"github.com/lallison/h_skills_project/internal/service/gateways/status"
 	"github.com/lallison/h_skills_project/internal/service/repository/computer"
-	repository_status "github.com/lallison/h_skills_project/internal/service/repository/status"
+	"github.com/lallison/h_skills_project/internal/service/repository/status"
 	"github.com/lallison/h_skills_project/internal/service/usecase/computer"
-	usecase_status "github.com/lallison/h_skills_project/internal/service/usecase/status"
+	"github.com/lallison/h_skills_project/internal/service/usecase/status"
+	_ "github.com/lib/pq"
 	"log"
 	"os"
 

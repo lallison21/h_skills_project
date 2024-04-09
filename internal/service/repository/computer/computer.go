@@ -50,3 +50,23 @@ func (r *ComputerRepository) Computers() ([]*entities.Computer, error) {
 
 	return res, nil
 }
+
+func (r *ComputerRepository) ComputerByID(id string) (*entities.Computer, error) {
+	var res *entities.Computer
+
+	stmt, err := r.db.Prepare("SELECT * FROM computers WHERE id=?")
+	if err != nil {
+		return res, fmt.Errorf("failed to prepare query: %w", err)
+	}
+
+	row := stmt.QueryRow(id)
+	if err := row.Scan(&res); err != nil {
+		return res, fmt.Errorf("failed to scan row: %w", err)
+	}
+
+	return res, nil
+}
+
+func (r *ComputerRepository) CreateComputer(computer *entities.Computer) (*entities.Computer, error) {
+	return nil, nil
+}

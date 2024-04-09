@@ -1,12 +1,19 @@
-FROM golang:alpine
+FROM golang:alpine AS builder
 
 WORKDIR /usr/local/src
 
-COPY . .
+RUN apk --no-cache add bash make
+#RUN go install -mod=mod github.com/githubnemo/CompileDaemon
 
+COPY ["./go.mod", "./go.sum", "./"]
 RUN go mod download
-RUN go install -mod=mod github.com/githubnemo/CompileDaemon
 
-EXPOSE 8080
+COPY ./ ./
+#RUN CompileDaemon --build="go build -o bin/api ./cmd/api"
+RUN make build-api
 
-ENTRYPOINT CompileDaemon --build="go build -o main ./cmd/h_skills_project" --command="./main"
+FROM alpine AS runner
+
+COPY --from=builder /usr/local/src/bin/api ./
+
+CMD ["./api"]

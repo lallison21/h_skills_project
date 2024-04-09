@@ -19,3 +19,11 @@ func New(
 func (u *ComputerUseCase) Computers() ([]*entities.Computer, error) {
 	return u.computerRepository.Computers()
 }
+
+func (u *ComputerUseCase) ComputerByID(id string) (*entities.Computer, error) {
+	return u.computerRepository.ComputerByID(id)
+}
+
+func (u *ComputerUseCase) CreateComputer(computer *entities.Computer) (*entities.Computer, error) {
+	return u.computerRepository.CreateComputer(computer)
+}
