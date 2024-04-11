@@ -33,6 +33,10 @@ func (g *ComputerGateway) CreateComputer(logger *slog.Logger) http.HandlerFunc {
 		}
 
 		w.WriteHeader(http.StatusCreated)
+		if _, err := w.Write([]byte("OK")); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 }
 
