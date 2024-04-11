@@ -28,6 +28,27 @@ services:
     networks:
       - development
 
+  migration:
+    image: migrate/migrate
+    container_name: development-migration
+    profiles: ["tools"]
+    volumes:
+      - ./migrations:/migrations
+    entrypoint:
+      [
+        "migrate",
+        "-path",
+        "/migrations",
+        "-database",
+        "postgres://postgres:qwerty@development-db:5432/postgres?sslmode=disable"
+      ]
+    command: ["up", "down"]
+    depends_on:
+      development-db:
+        condition: service_healthy
+    networks:
+      - development
+
 networks:
   development:
     driver: bridge
