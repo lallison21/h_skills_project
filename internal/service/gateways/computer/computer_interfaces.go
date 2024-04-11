@@ -5,6 +5,8 @@ import (
 	"log/slog"
 )
 
+//go:generate mockgen -destination=mocks/computer_usecase.go -package=mocks . ComputerUseCase
+
 type ComputerUseCase interface {
 	Computers(logger *slog.Logger) ([]*entities.Computer, error)
 	ComputerByID(logger *slog.Logger, id string) (*entities.Computer, error)

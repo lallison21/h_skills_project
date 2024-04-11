@@ -2,17 +2,17 @@ package usecase_status
 
 import (
 	"github.com/lallison/h_skills_project/internal/entities"
-	repository_status "github.com/lallison/h_skills_project/internal/service/repository/status"
+	"log/slog"
 )
 
 type UseCaseStatus struct {
-	repository *repository_status.RepositoryStatus
+	repository StatusRepository
 }
 
-func New(repository *repository_status.RepositoryStatus) *UseCaseStatus {
+func New(repository StatusRepository) *UseCaseStatus {
 	return &UseCaseStatus{repository: repository}
 }
 
-func (u *UseCaseStatus) GetStatus() (*entities.Response, error) {
-	return u.repository.GetStatus()
+func (u *UseCaseStatus) Status(logger *slog.Logger) (*entities.Response, error) {
+	return u.repository.Status(logger)
 }

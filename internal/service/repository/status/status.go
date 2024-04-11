@@ -1,27 +1,29 @@
 package repository_status
 
 import (
-	"time"
-
+	"database/sql"
 	"github.com/lallison/h_skills_project/internal/entities"
-	"github.com/lallison/h_skills_project/version"
+	"log/slog"
+	"time"
 )
 
 type RepositoryStatus struct {
-	response *entities.Response
+	db *sql.DB
 }
 
-func New() *RepositoryStatus {
+func New(db *sql.DB) *RepositoryStatus {
 	return &RepositoryStatus{
-		response: &entities.Response{
-			ServiceName:    "h_skills_project",
-			ServiceVersion: version.Version,
-			Timestamp:      time.Now(),
-			Status:         "OK",
-		},
+		db: db,
 	}
 }
 
-func (repository *RepositoryStatus) GetStatus() (*entities.Response, error) {
-	return repository.response, nil
+func (r *RepositoryStatus) Status(logger *slog.Logger) (*entities.Response, error) {
+	res := &entities.Response{
+		ServiceName:    "h_skills_project",
+		ServiceVersion: "0.0.1",
+		Status:         "OK",
+		Timestamp:      time.Now(),
+	}
+
+	return res, nil
 }

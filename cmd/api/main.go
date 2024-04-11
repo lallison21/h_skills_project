@@ -41,7 +41,7 @@ func main() {
 	computerGateways := computer_gateways.New(computerUseCase)
 	app.RegisterComputerGateways(computerGateways)
 
-	statusRepository := repository_status.New()
+	statusRepository := repository_status.New(db)
 	statusUseCase := usecase_status.New(statusRepository)
 	statusGateways := gateway_status.New(statusUseCase)
 	app.RegisterStatusGateways(statusGateways)

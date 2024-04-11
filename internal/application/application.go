@@ -78,6 +78,8 @@ func (a *Application) gracefulShutdown() {
 	}
 }
 
+//go:generate mockgen -destination=mocks/computer_gateways.go -package=mocks . ComputerGateways
+
 type ComputerGateways interface {
 	CreateComputer(logger *slog.Logger) http.HandlerFunc
 	Computers(logger *slog.Logger) http.HandlerFunc
@@ -90,10 +92,12 @@ func (a *Application) RegisterComputerGateways(gateway ComputerGateways) {
 	a.mux.HandleFunc("GET /api/computers/{id}", gateway.ComputerByID(a.log))
 }
 
+//go:generate mockgen -destination=mocks/status_gateways.go -package=mocks . StatusGateways
+
 type StatusGateways interface {
-	StatusHandle(w http.ResponseWriter, r *http.Request)
+	Status(logger *slog.Logger) http.HandlerFunc
 }
 
 func (a *Application) RegisterStatusGateways(gateway StatusGateways) {
-	a.mux.HandleFunc("GET /api/status", gateway.StatusHandle)
+	a.mux.HandleFunc("GET /api/status", gateway.Status(a.log))
 }
