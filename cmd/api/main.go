@@ -47,4 +47,8 @@ func main() {
 	app.RegisterStatusGateways(statusGateways)
 
 	app.Run()
+
+	if err := db.Close(); err != nil {
+		log.Fatal(err)
+	}
 }
