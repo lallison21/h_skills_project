@@ -46,6 +46,8 @@ func main() {
 	statusGateways := gateway_status.New(statusUseCase)
 	app.RegisterStatusGateways(statusGateways)
 
+	//app.RegisterGateways(computerGateways)
+
 	app.Run()
 
 	if err := db.Close(); err != nil {
